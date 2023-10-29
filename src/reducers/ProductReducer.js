@@ -15,14 +15,12 @@ export const ProductReducer = (state = {}, action) => {
         product: action.payload.product,
         isProductLoading: false,
       };
-    // case types.auth.onLogout:
-    //     return {
-    //         ...state,
-    //         user: null,
-    //         isLogged: false,
-    //         errorMessage: action.payload.errorMessage,
-    //         isLoading: false
-    //     };
+
+    case types.product.editProduct:
+      return {
+        ...state,
+        products: action.payload.products,
+      };
 
     default:
       return state;

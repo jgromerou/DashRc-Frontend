@@ -68,15 +68,52 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
-  //   const editUser = async (dataUser) => {
-  //     const { id } = dataUser;
+  const editProduct = async (
+    id,
+    nombreProducto,
+    precio,
+    imagen,
+    descripcion,
+    categoria
+  ) => {
+    const { data } = await dashAxios.put(`productos/${id}`, {
+      id,
+      nombreProducto,
+      precio,
+      imagen,
+      descripcion,
+      categoria,
+    });
 
-  //     const { data } = await dashAxios.put(`users/${id}`, {
-  //       dataUser,
-  //     });
+    console.log(data);
 
-  //     console.log(data);
-  //   };
+    if (data) {
+      const newProducts = state.products.map((item) => {
+        if (item._id == id) {
+          console.log('entro x aqui');
+          return {
+            _id: id,
+            nombreProducto,
+            precio,
+            imagen,
+            descripcion,
+            categoria,
+            __v: 0,
+          };
+        }
+        return item;
+      });
+
+      console.log(newProducts);
+
+      dispatch({
+        type: types.product.editProduct,
+        payload: {
+          products: newProducts,
+        },
+      });
+    }
+  };
 
   //   const deleteUser = async (id) => {
   //     const { data } = await dashAxios.delete(`users/${id}`);
@@ -129,6 +166,7 @@ export const ProductProvider = ({ children }) => {
         state,
         getProducts,
         getProduct,
+        editProduct,
       }}
     >
       {children}

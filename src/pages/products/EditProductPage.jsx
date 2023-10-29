@@ -22,7 +22,7 @@ import { useForm } from '../../hooks/useForm';
 
 export const EditProductPage = () => {
   const { id } = useParams();
-  const { getProduct, product } = useContext(ProductContext);
+  const { getProduct, product, editProduct } = useContext(ProductContext);
   const {
     formState,
     onInputChange,
@@ -38,6 +38,28 @@ export const EditProductPage = () => {
       getProduct(id);
     }
   }, []);
+
+  const onSubmit = () => {
+    console.log('enviando formulario');
+    console.log({ id, nombreProducto, precio, imagen, descripcion, categoria });
+
+    editProduct(id, nombreProducto, precio, imagen, descripcion, categoria);
+    // setUserEdited(true);
+    // console.log({ ...values, id });
+    // editUser({ ...values, id });
+    // resetForm();
+    // setValues({
+    //   email: '',
+    //   firstname: '',
+    //   lastname: '',
+    //   status: '',
+    //   role: '',
+    // });
+
+    // if (state.errorMessage === '') {
+    //   navigate('/dashboard/user');
+    // }
+  };
 
   return (
     <Paper>
@@ -177,7 +199,12 @@ export const EditProductPage = () => {
           </Grid> */}
 
           <Grid item xs={12} md={12}>
-            <Button variant="contained" size="large" color="info">
+            <Button
+              variant="contained"
+              size="large"
+              color="info"
+              onClick={onSubmit}
+            >
               GUARDAR
             </Button>
           </Grid>
