@@ -85,8 +85,6 @@ export const ProductProvider = ({ children }) => {
       categoria,
     });
 
-    console.log(data);
-
     if (data) {
       const newProducts = state.products.map((item) => {
         if (item._id == id) {
@@ -104,8 +102,6 @@ export const ProductProvider = ({ children }) => {
         return item;
       });
 
-      console.log(newProducts);
-
       dispatch({
         type: types.product.editProduct,
         payload: {
@@ -115,49 +111,21 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
-  //   const deleteUser = async (id) => {
-  //     const { data } = await dashAxios.delete(`users/${id}`);
+  const deleteProduct = async (id) => {
+    const { data } = await dashAxios.delete(`productos/${id}`);
 
-  //     if (data) {
-  //       const users = state.users.filter((item) => {
-  //         if (item.id == id) {
-  //           item.is_active = false;
-  //         }
+    if (data) {
+      const newProducts = state.products.filter((item) => item._id !== id);
 
-  //         return item;
-  //       });
-
-  //       dispatch({
-  //         type: types.user.deleteUser,
-  //         payload: {
-  //           users,
-  //         },
-  //       });
-  //     }
-  //   };
-
-  //   const activeUser = async (id) => {
-  //     const { data } = await dashAxios.put(`users/${id}`, {
-  //       is_active: true,
-  //     });
-
-  //     if (data) {
-  //       const users = state.users.filter((item) => {
-  //         if (item.id == id) {
-  //           item.is_active = true;
-  //         }
-
-  //         return item;
-  //       });
-
-  //       dispatch({
-  //         type: types.user.activeUser,
-  //         payload: {
-  //           users,
-  //         },
-  //       });
-  //     }
-  //   };
+      console.log(newProducts);
+      dispatch({
+        type: types.product.deleteProduct,
+        payload: {
+          products: newProducts,
+        },
+      });
+    }
+  };
 
   return (
     <ProductContext.Provider
@@ -167,6 +135,7 @@ export const ProductProvider = ({ children }) => {
         getProducts,
         getProduct,
         editProduct,
+        deleteProduct,
       }}
     >
       {children}

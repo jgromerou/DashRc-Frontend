@@ -22,6 +22,12 @@ export const ProductReducer = (state = {}, action) => {
         products: action.payload.products,
       };
 
+    case types.product.deleteProduct:
+      return {
+        ...state,
+        products: action.payload.products,
+      };
+
     default:
       return state;
   }

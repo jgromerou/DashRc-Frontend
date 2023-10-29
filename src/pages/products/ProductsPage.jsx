@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 export const ProductsPage = () => {
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(0);
-  const { state, getProducts } = useContext(ProductContext);
+  const { state, getProducts, deleteProduct } = useContext(ProductContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export const ProductsPage = () => {
         {/* Borrar un producto */}
         <IconButton
           color={row.is_active ? 'info' : 'disabled'}
-          onClick={() => deleteUser(row._id)}
+          onClick={() => deletingProduct(row._id)}
           title="Deshabilitar Usuario"
         >
           <DeleteOutlineIcon
@@ -92,37 +92,6 @@ export const ProductsPage = () => {
       headerName: 'Categoria',
       minWidth: 150,
     },
-    // {
-    //   flex: 0.1,
-    //   field: 'is_active',
-    //   headerName: 'Activo',
-    //   minWidth: 100,
-    //   renderCell: ({ row }) => {
-    //     return (
-    //       <Box>
-    //         <IconButton
-    //           aria-label="Usuario Activo"
-    //           color="info"
-    //           disabled={true}
-    //         >
-    //           <DoneAllIcon
-    //             fontSize="medium"
-    //             sx={{ mr: 2 }}
-    //             color={row.is_active ? 'success' : 'disabled'}
-    //           />
-    //         </IconButton>
-    //       </Box>
-    //     );
-    //   },
-    // },
-    // {
-    //   flex: 0.12,
-    //   field: 'created_at',
-    //   headerName: 'Creado',
-    //   width: 120,
-    //   // valueFormatter: params =>
-    //   //   moment(params?.value).format("DD/MM/YYYY hh:mm:ss"),
-    // },
     {
       flex: 0,
       field: 'acciones',
@@ -133,6 +102,10 @@ export const ProductsPage = () => {
       },
     },
   ];
+
+  const deletingProduct = (id) => {
+    deleteProduct(id);
+  };
 
   return (
     <Grid container spacing={3}>
