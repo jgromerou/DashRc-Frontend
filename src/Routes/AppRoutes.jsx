@@ -10,11 +10,9 @@ import { ProductContext } from '../contexts/ProductContext';
 
 export const AppRoutes = () => {
   const { checkAuthToken, state } = useContext(AuthContext);
-  const { state: stateProducts, getProducts } = useContext(ProductContext);
 
   useEffect(() => {
     checkAuthToken();
-    stateProducts.products.length === 0 && getProducts();
   }, []);
 
   if (state.isLoading) {
