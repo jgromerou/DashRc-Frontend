@@ -20,9 +20,8 @@ import { ProductContext } from '../../contexts/ProductContext';
 import { Loading } from '../../components/ui/Loading';
 import { useForm } from '../../hooks/useForm';
 
-export const EditProductPage = () => {
-  const { id } = useParams();
-  const { getProduct, product, editProduct } = useContext(ProductContext);
+export const AddProductPage = () => {
+  const { product, addProduct } = useContext(ProductContext);
   const {
     formState,
     onInputChange,
@@ -33,17 +32,11 @@ export const EditProductPage = () => {
     categoria,
   } = useForm(product);
 
-  useEffect(() => {
-    if (id) {
-      getProduct(id);
-    }
-  }, []);
-
   const onSubmit = () => {
     console.log('enviando formulario');
-    console.log({ id, nombreProducto, precio, imagen, descripcion, categoria });
+    console.log({ nombreProducto, precio, imagen, descripcion, categoria });
 
-    editProduct(id, nombreProducto, precio, imagen, descripcion, categoria);
+    addProduct(nombreProducto, precio, imagen, descripcion, categoria);
     // setUserEdited(true);
     // console.log({ ...values, id });
     // editUser({ ...values, id });
@@ -172,7 +165,6 @@ export const EditProductPage = () => {
               </Select>
             </Box>
           </Grid>
-
           <Grid item xs={12} md={12}>
             <Button
               variant="contained"

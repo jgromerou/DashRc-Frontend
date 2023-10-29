@@ -16,6 +16,12 @@ export const ProductReducer = (state = {}, action) => {
         isProductLoading: false,
       };
 
+    case types.product.addProduct:
+      return {
+        ...state,
+        products: action.payload.products,
+      };
+
     case types.product.editProduct:
       return {
         ...state,

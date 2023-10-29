@@ -15,6 +15,8 @@ import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutli
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import { useNavigate } from 'react-router-dom';
+// @mui iconos
+import Iconify from '../../components/iconify/iconify';
 
 export const ProductsPage = () => {
   const [pageSize, setPageSize] = useState(10);
@@ -119,6 +121,15 @@ export const ProductsPage = () => {
         <Typography variant="h5" fontFamily={'fantasy'}>
           Lista Productos
         </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Button
+          variant="contained"
+          startIcon={<Iconify icon="eva:plus-fill" />}
+          href="/productos/agregar"
+        >
+          Nuevo Producto
+        </Button>
       </Grid>
       <Grid item xs={12} md={12}>
         <Paper>

@@ -68,6 +68,33 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  //Agregar Producto
+  const addProduct = async (
+    nombreProducto,
+    precio,
+    imagen,
+    descripcion,
+    categoria
+  ) => {
+    const { data } = await dashAxios.post(`productos`, {
+      nombreProducto,
+      precio,
+      imagen,
+      descripcion,
+      categoria,
+    });
+    const producto = data.producto;
+    if (producto) {
+      let newProducts = [...state.products, producto];
+      dispatch({
+        type: types.product.addProduct,
+        payload: {
+          products: newProducts,
+        },
+      });
+    }
+  };
+
   const editProduct = async (
     id,
     nombreProducto,
@@ -88,7 +115,6 @@ export const ProductProvider = ({ children }) => {
     if (data) {
       const newProducts = state.products.map((item) => {
         if (item._id == id) {
-          console.log('entro x aqui');
           return {
             _id: id,
             nombreProducto,
@@ -134,6 +160,7 @@ export const ProductProvider = ({ children }) => {
         state,
         getProducts,
         getProduct,
+        addProduct,
         editProduct,
         deleteProduct,
       }}
