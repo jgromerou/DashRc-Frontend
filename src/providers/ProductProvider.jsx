@@ -1,8 +1,8 @@
 import { useReducer, useState } from 'react';
-import { UserContext } from '../contexts/UserContext';
 import { ProductReducer } from '../reducers/ProductReducer';
 import { dashAxios } from '../config/DashRcAxios';
 import { types } from '../types/types';
+import { ProductContext } from '../contexts/ProductContext';
 
 const initialState = {
   isLoading: true,
@@ -12,58 +12,61 @@ const initialState = {
   totalRows: 0,
   errorMessage: '',
   succesMessage: '',
+  isProductLoading: true,
 };
 
-export const UserProvider = ({ children }) => {
+export const ProductProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ProductReducer, initialState);
 
   const getProducts = async (page = 0) => {
     // const limit = 25;
-    const { data } = await dashAxios.get(`products`);
+    const { data } = await dashAxios.get(`productos`);
     console.log(data);
-    // if(!data){
-    //     return dispatch({
-    //         type: types.user.messages,
-    //         payload: {
-    //             messageStatus: 'ERROR',
-    //             msg: 'No Existen productos en el sistema',
-    //         }
-    //     })
-    // };
+    if (!data) {
+      return dispatch({
+        type: types.product.messages,
+        payload: {
+          messageStatus: 'ERROR',
+          msg: 'No Existen productos en el sistema',
+        },
+      });
+    }
 
-    // dispatch({
-    //     type: types.user.getProducts,
-    //     payload:  {
-    //         productos:  data.products,
-    //         //totalRows: data.res.totalRows
-    //     }
-    // });
+    dispatch({
+      type: types.product.getProducts,
+      payload: {
+        products: data,
+        //totalRows: data.res.totalRows
+      },
+    });
   };
 
-  //   const getUser = (id) => {
-  //     try {
-  //       const user = state.users.find((item) => item.id == id);
+  const getProduct = async (id) => {
+    try {
+      //const product = state.products.find((item) => item._id === id);
+      const product = await dashAxios.get(`productos/${id}`);
+      console.log('product', product.data);
+      if (!product) {
+        console.log('entro por aqui');
+        return dispatch({
+          type: types.product.messages,
+          payload: {
+            messageStatus: 'ERROR',
+            msg: 'No Existe el producto en el sistema',
+          },
+        });
+      }
 
-  //       if (!user) {
-  //         return dispatch({
-  //           type: types.user.messages,
-  //           payload: {
-  //             messageStatus: 'ERROR',
-  //             msg: 'No Existe el usuario en el sistema',
-  //           },
-  //         });
-  //       }
-
-  //       dispatch({
-  //         type: types.user.getOneUser,
-  //         payload: {
-  //           user,
-  //         },
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+      dispatch({
+        type: types.product.getOneProduct,
+        payload: {
+          product: product.data,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   //   const editUser = async (dataUser) => {
   //     const { id } = dataUser;
@@ -120,13 +123,15 @@ export const UserProvider = ({ children }) => {
   //   };
 
   return (
-    <UserContext.Provider
+    <ProductContext.Provider
       value={{
+        ...state,
         state,
         getProducts,
+        getProduct,
       }}
     >
       {children}
-    </UserContext.Provider>
+    </ProductContext.Provider>
   );
 };

@@ -9,7 +9,12 @@ export const ProductReducer = (state = {}, action) => {
         errorMessage: '',
         isLoading: false,
       };
-
+    case types.product.getOneProduct:
+      return {
+        ...state,
+        product: action.payload.product,
+        isProductLoading: false,
+      };
     // case types.auth.onLogout:
     //     return {
     //         ...state,
