@@ -21,7 +21,7 @@ import { Loading } from '../../components/ui/Loading';
 import { useForm } from '../../hooks/useForm';
 
 export const AddProductPage = () => {
-  const { product, addProduct } = useContext(ProductContext);
+  const { product, addProduct, getProducts } = useContext(ProductContext);
   const {
     formState,
     onInputChange,
@@ -31,6 +31,10 @@ export const AddProductPage = () => {
     imagen,
     categoria,
   } = useForm(product);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   const onSubmit = () => {
     console.log('enviando formulario');

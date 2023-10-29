@@ -90,6 +90,7 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         checkAuthToken,
+        ...state,
       }}
     >
       {children}
