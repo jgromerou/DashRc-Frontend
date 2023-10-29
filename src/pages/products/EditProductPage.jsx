@@ -22,7 +22,8 @@ import { useForm } from '../../hooks/useForm';
 
 export const EditProductPage = () => {
   const { id } = useParams();
-  const { getProduct, product, editProduct } = useContext(ProductContext);
+  const { getProduct, product, editProduct, getProducts } =
+    useContext(ProductContext);
   const {
     formState,
     onInputChange,
@@ -32,6 +33,10 @@ export const EditProductPage = () => {
     imagen,
     categoria,
   } = useForm(product);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   useEffect(() => {
     if (id) {
