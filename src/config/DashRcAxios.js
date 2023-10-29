@@ -8,7 +8,7 @@ export const dashAxios = axios.create({
 dashAxios.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
-    'x-token-data': localStorage.getItem('tokenRc'),
+    'x-token': localStorage.getItem('tokenRc'),
   };
   return config;
 });
