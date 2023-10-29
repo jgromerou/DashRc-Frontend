@@ -14,6 +14,8 @@ import { Error404Page } from '../pages/error/Error404Page';
 import { UserPage } from '../pages/user/UserPage';
 import { ProductsPage } from '../pages/products/ProductsPage';
 import { EditUserPage } from '../pages/user/EditUserPage';
+import { EditProductPage } from '../pages/products/EditProductPage';
+import { AddProductPage } from '../pages/products/AddProductPage';
 
 
 const defaultTheme = createTheme();
@@ -62,6 +64,8 @@ export function GeneralLayout() {
               <Route  path='/usuarios' element={<UserPage />} />
               <Route  path='/usuarios/editar/:id' element={<EditUserPage />} />
               <Route  path='/productos' element={<ProductsPage />} />
+              <Route  path='/productos/agregar' element={<AddProductPage />} />
+              <Route  path='/productos/editar/:id' element={<EditProductPage />} />
               <Route  path='/' element={<DashPage />} />
               <Route  path='/*' element={<Error404Page />} />
             </Routes>

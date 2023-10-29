@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
         });
       }
 
-      const { data } = await dashAxios.get('auth/user/review/token');
+      const { data } = await dashAxios.get('auth/revalidartoken');
       localStorage.setItem('tokenRc', data.res.token);
 
       dispatch({
